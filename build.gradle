@@ -29,6 +29,10 @@ dependencies {
     // tag::security[]
     compile("org.springframework.boot:spring-boot-starter-security")
     // end::security[]
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
+    compile("net.sourceforge.nekohtml:nekohtml:1.9.21")
+    
     testCompile("junit:junit")
 }
 
