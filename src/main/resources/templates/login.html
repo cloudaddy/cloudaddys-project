@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="master/layout">
+<head>
+<title>Spring Security Example</title>
+<link rel="stylesheet" href="/assets/css/signin.css">
+</head>
+<body>
+	<h1 layout:fragment="header"></h1>
+	<div layout:fragment="content" class="container">
+
+		<form class="form-signin" th:action="@{/login}" method="post">
+			<h2 class="form-signin-heading">Please sign in</h2>
+			<label for="inputEmail" class="sr-only">Username</label> <input
+				type="text" id="txtUsername" class="form-control"
+				placeholder="Username" name="username" required autofocus /> <label
+				for="txtPassword" class="sr-only">Password</label> <input
+				type="password" id="txtPassword" class="form-control"
+				placeholder="Password" name="password" required>
+			<div class="checkbox">
+				<label> <input type="checkbox" value="remember-me">
+					Remember me
+				</label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
+				in</button>
+		</form>
+
+		<div class="sign-in-message" th:if="${param.error}">Invalid
+			username and password.</div>
+		<div class="sign-in-message" th:if="${param.logout}">You have
+			been logged out.</div>
+	</div>
+
+	<!-- /container -->
+
+
+</body>
+</html>
