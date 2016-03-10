@@ -7,6 +7,7 @@ Final project repo for the Network Structure &amp; Cloud Computing class
 - Spring MVC
 - Spring Security
 - Thymeleaf template engine
+- Bootstrap
 - Maven & Gradle
 
 ## How to RUN it
@@ -15,6 +16,7 @@ Final project repo for the Network Structure &amp; Cloud Computing class
    `./gradlew`
    then
    `./gradlew bootRun`
+   (For windows users use `gradlew.bat` instead)
 
 3. It should download all the dependencies and build the whole project
 4. When it says something like: `Started Application in 2.952 seconds`
