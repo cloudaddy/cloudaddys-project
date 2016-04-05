@@ -1,5 +1,7 @@
 package edu.neu.cloudaddy.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+         http
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/", "/home","/assets/**","/favicon.ico").permitAll()
@@ -28,9 +30,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
+	DataSource dataSource;
+    
+    String user = "select u.username,p.password, 1 AS enabled from users u, users_password p" +
+    		" where u.username=? and u.id=p.id";
+    
+    String authority="select username, authority from authorities where username = ?";
+    
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
+       /* auth
             .inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER");
+                */
+    	auth.jdbcAuthentication().dataSource(dataSource)
+		.usersByUsernameQuery(user).authoritiesByUsernameQuery(authority);
     }
 }

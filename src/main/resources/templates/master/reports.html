@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="master/layout">
+<head>
+<title>generate reports</title>
+</head>
+<body>
+	<h4 layout:fragment="header">Hello [[${#httpServletRequest.remoteUser}]]! | localhost</h4>
+	
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" />
+	</form>
+		
+	<div layout:fragment="content" class="container">
+		<hr/>
+		<h4 th:inline="text">Supplier Reports</h4>
+		<hr/>
+		<form th:action="@{/reports}" method="post">
+			<h4 th:inline="text">Search by: &nbsp
+		    <select th:field="*{Name}" th:remove="all-but-first">
+	            <option th:each="Name : ${name}" 
+	                    th:value="${name}" th:text="${name.description}">Supplier Name</option>
+	            <option>Product Name</option>
+	        </select>
+	        <input type="button" value="Generate Report" class="btn" th:attrappend="class=${' ' + cssStyle}" />
+			</h4>
+		</form>
+		<table border="5px">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Report Name</th>
+				<th>Created On</td>
+			</tr>
+			<tr th:each="report : ${reports}">
+				<td th:text="${report.name}">Name</td>
+				<td th:text="${report.type}">Type</td>
+				<td th:text="${report.shortName}">Report Name</td>
+				<td th:text="${report.created_on}">Created On</td>
+			</tr>	
+		</table>
+	</div>
+</body>
+</html>

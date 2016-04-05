@@ -12,7 +12,7 @@
 	<h1 layout:fragment="header"></h1>
 	<div layout:fragment="content" class="container">
 
-		<form class="form-signin" th:action="@{/login}" method="post">
+		<form class="form-signin" th:action="@{/login}" method="post" commandName="user">
 			<h2 class="form-signin-heading">Please sign in</h2>
 			<label for="inputEmail" class="sr-only">Username</label> <input
 				type="text" id="txtUsername" class="form-control"
@@ -30,7 +30,7 @@
 		</form>
 
 		<div class="sign-in-message" th:if="${param.error}">Invalid
-			username and password.</div>
+			username or password.</div>
 		<div class="sign-in-message" th:if="${param.logout}">You have
 			been logged out.</div>
 	</div>
