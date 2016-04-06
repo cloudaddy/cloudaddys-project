@@ -1,6 +1,6 @@
 package edu.neu.cloudaddy.model;
 
-public class Products {
+public class Product {
 private String supplier_ids;
 private int id;
 private String product_code;

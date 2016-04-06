@@ -8,12 +8,34 @@
 <title>generate reports</title>
 </head>
 	<body>
-	<h1 layout:fragment="header">Hello Page</h1>
 	<div layout:fragment="content" class="container">
-		Hello <p th:text="${username}"></p> 
+		<p th:text="Hello" th:text="${username}" </p> 
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Sign Out" />
 		</form>
+		<br/>
+		<form th:action="@{/hello}" method="post">
+			<input type="submit" value="Refresh" />
+		</form>
+		<div>
+			<form style="display:inline-block" th:action="@{/search}" th:object="${suppliers}" method="GET">
+    			<select th:name="prod">
+					<option th:each="supplier : ${suppliers}" 
+			  			th:value="${supplier.getId()}" 
+			  			th:text="${supplier.getCompany()}" />
+				</select>
+				<input type="submit" value="Generate Product Report" />
+			</form>
+		</div>
+		<div>
+		<table border="10px">
+		<th:block th:each="product : ${products}">
+    		<tr>
+        		<td th:text="${product.Id}">Unknown</td>
+    		</tr>
+		</th:block>
+		</table>
+		</div>
 	</div>
 </body>
 </html>
