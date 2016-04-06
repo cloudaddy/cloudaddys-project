@@ -1,5 +1,5 @@
+[![Build Status](https://travis-ci.org/cloudaddy/cloudaddys-project.svg?branch=master)](https://travis-ci.org/cloudaddy/cloudaddys-project)   
 # Cloudaddy Project
-[![Build Status](https://travis-ci.org/cloudaddy/cloudaddys-project.svg?branch=master)](https://travis-ci.org/cloudaddy/cloudaddys-project)
 Final project repo for the Network Structure &amp; Cloud Computing class
 
 ## What it is made of
