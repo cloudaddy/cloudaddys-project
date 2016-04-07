@@ -24,4 +24,5 @@ deploy:
 before_deploy:
 - mkdir -p dpl_cd_upload
 - rm .gitignore
+- ls -lha target
 - mv target/cloudaddy-project-*.jar dpl_cd_upload/cloudaddy-website.zip
