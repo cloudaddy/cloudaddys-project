@@ -23,5 +23,6 @@ deploy:
   on: *2
 before_deploy:
 - mkdir -p dpl_cd_upload
-- rm .gitignore
+- ls -Rahl
+- rm -f .gitignore
 - mv target/cloudaddy-project-*.war dpl_cd_upload/cloudaddy-website.zip
