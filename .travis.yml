@@ -1,3 +1,26 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
+deploy:
+- provider: s3
+  access_key_id: AKIAI27RKRZTWC7LOJOQ
+  secret_access_key: &1
+    secure: 1cwSXsVPej5+LqFwmpuFzt/fcoYGsKS2nHQoa0+fbCkwy80qynPyBdQyLLlEn+ydmUqkZUeFV+MAfroBHdVGRXcmCh1X5Qa9HgS4d7D7fUwo5evfgRicFyRgmI5KHsAy4EHyWyUqAC3RTqVWVbYyQmuAAMIt3VRHoOIgT62wXRYimd1H24Dk1q2Rb9EQTisTwjs6lQctTDtrmDsGgn9uiWktpw667bUKQe3MipBjqrDTK+/TB3pxbOu67iHQE6WjYC3eue9UAx8qOUrJlYFo29SjrwDTwUmJWsx2CAr514AJeKE2f6pqpj6kDTt/KGFtaJ9wnkMpxwQvEgkwt743/vuQ9Ikdo4dPPG6hU+0ZYLUdtffLO2MAEFQIGJtb00mjLJWSriUYZLHhQWACv5dkace5AYBCrjCf8IxdBUUeFEpCAiVb0blvvzQG88UDalON06iWS6TzNReugZyHFE2k4p3GmZ4Rhn3diJoo0h9xLSQ0IAR+O0qh2XdqA6ldIpp9lcr3vC3FzEQjtyOOtfXf+6KN4VHXYKRPsaEdjsH0XlEcnOELu9uaDXIADuouUOQ4pm9lcEYO4PvXa7b2L63p2/1QzYzff5io9N/as0GHw9ZxvPgKjdBhUWZT56JEWsoHmGjQyFRRvqDCLQLnh3uOLis3kYHEa5hJy+nKqODmeQg=
+  local_dir: dpl_cd_upload
+  skip_cleanup: true
+  on: &2
+    repo: cloudaddy/cloudaddys-project
+  bucket: cloudaddy
+  upload_dir: latest
+- provider: codedeploy
+  access_key_id: AKIAI27RKRZTWC7LOJOQ
+  secret_access_key: *1
+  bucket: cloudaddy
+  key: latest/cloudaddy-website.zip
+  bundle_type: zip
+  application: cloudaddys-project
+  deployment_group: production
+  on: *2
+before_deploy:
+- mkdir -p dpl_cd_upload
+- mv cloudaddy-website.zip dpl_cd_upload/cloudaddy-website.zip
