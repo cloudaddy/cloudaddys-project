@@ -2,6 +2,10 @@ package edu.neu.cloudaddy.controllers;
 
 
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,11 +37,13 @@ public class HelloController {
 	private UserService userService;
 	
 	@RequestMapping("/hello")
-	public String hello(Model model) {
+	public String hello(Model model, HttpServletRequest request) {
 		try{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		      String name = auth.getName();
 		      //System.out.println("name : " + name);
+		      HttpSession session = request.getSession();
+		      session.setAttribute("username", name);
 		      User user = userService.getUserIdService(name);
 		      ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
 		      if(user.getId() != 0){
