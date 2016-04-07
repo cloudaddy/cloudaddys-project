@@ -2,12 +2,20 @@ package edu.neu.cloudaddy.model;
 
 public class User {
 
+	int Id;
 	String username;
 	String password;
 	
 	public User(){
 	}
 	
+	
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		Id = id;
+	}
 	public String getUsername() {
 		return username;
 	}

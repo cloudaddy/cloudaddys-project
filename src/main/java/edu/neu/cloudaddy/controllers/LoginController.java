@@ -10,7 +10,6 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		model.addAttribute("messege", "hi, i am there");
 		return "login";
 	}
 }

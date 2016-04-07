@@ -9,9 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import edu.neu.cloudaddy.model.Product;
+
+import edu.neu.cloudaddy.model.Report;
 import edu.neu.cloudaddy.model.Supplier;
+import edu.neu.cloudaddy.model.User;
+import edu.neu.cloudaddy.service.ReportService;
 import edu.neu.cloudaddy.service.SupplierService;
+import edu.neu.cloudaddy.service.UserService;
 
 @Controller
 public class HelloController {
@@ -21,17 +25,29 @@ public class HelloController {
 
 	@Autowired
 	private SupplierService supplierService;
+	
+	@Autowired
+	private ReportService reportService;
 
+	@Autowired
+	private UserService userService;
+	
 	@RequestMapping("/hello")
 	public String hello(Model model) {
 		try{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		      String name = auth.getName(); //get logged in username'
+		      String name = auth.getName();
 		      //System.out.println("name : " + name);
+		      User user = userService.getUserIdService(name);
 		      ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
+		      if(user.getId() != 0){
+		    	  ArrayList<Report> reports = reportService.getReportService(user.getId());
+		    	  model.addAttribute("reports", reports);
+		      }
+		    	  
+		      
 		      model.addAttribute("suppliers", suppliers);
 		      model.addAttribute("username", name);
-		      //model.addAttribute("products", new ArrayList<Product>());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
