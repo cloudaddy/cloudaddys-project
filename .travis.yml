@@ -17,10 +17,10 @@ deploy:
   secret_access_key: *1
   bucket: cloudaddy
   key: latest/cloudaddy-website.jar
-  bundle_type: jar
+  bundle_type: zip
   application: cloudaddys-project
   deployment_group: production
   on: *2
 before_deploy:
 - mkdir -p dpl_cd_upload
-- mv target/cloudaddy-project-*.jar dpl_cd_upload/cloudaddy-website.jar
+- mv target/cloudaddy-project-*.jar dpl_cd_upload/cloudaddy-website.zip
