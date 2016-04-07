@@ -16,13 +16,12 @@ deploy:
   access_key_id: AKIAI27RKRZTWC7LOJOQ
   secret_access_key: *1
   bucket: cloudaddy
-  key: latest/cloudaddy-website.jar
+  key: latest/cloudaddy-website.zip
   bundle_type: zip
-  application: cloudaddys-project
+  application: Cloudaddy
   deployment_group: production
   on: *2
 before_deploy:
 - mkdir -p dpl_cd_upload
-- pwd
-- ls
-#- mv target/cloudaddy-project-*.jar dpl_cd_upload/cloudaddy-website.zip
+- rm .gitignore
+- mv target/cloudaddy-project-*.jar dpl_cd_upload/cloudaddy-website.zip
