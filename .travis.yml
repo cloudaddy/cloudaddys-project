@@ -2,20 +2,26 @@ language: java
 jdk:
 - oraclejdk8
 deploy:
-  provider: codedeploy
+- provider: s3
   access_key_id: AKIAI27RKRZTWC7LOJOQ
-  secret_access_key:
-    secure: zGCgEXGy8aEV+EEDzF1BqYeLYt5phUVT+Zaq1r57C/YP+DeN5O/0TXK1TaOHOXEvYA+QFRiqMBMIxcIdLcHs9gOelqs30YeqgW8CJ3gts4IRQ84fm5QYXEILS48vFgZ1H+sq0xQSYVnu/R0OBgA8KJCUlE19LFZngyTjS/mrJQrrf6aLE9RGCsBltxH5IePvMKerP/UmsgalJ5L67tfgxNwzHU6DIDRi9Q+bpIO2JYlxMmfbCE1N1eq1BCM2qDZcikYPlUyE2YbFVVNjqyFAX3cKGRZItPhTtWehz1qMVbiFkdSv3sL9yRgZblRDtMXtYeHDWLHAYB9GYdNpHe0zohc0YjTf3yxNHY4l5OSX/gAOvMiiMGowuD9uMjmgXsmE8kLoFMcFFp8KCivPybj0KuuU5x3JVwxiMjDzhOkCx1u7M5/cgbubnX1eAFNY3yIKt9lNOHqInrZmNTDORlBSYbgLMMBGxUlm6YiZshy6frFlQIbulw/+x0ModHFWY0oxLQ2iPwFrTZvJBxpAKS8DCwl53gqG7IQG3nYOmjVG/glr/YvTGeUz67rAJQm5YvUerv9imqvVuYkyfa0F842jIhhWDUkgsjfWHWzO68rcQAKXpS4ibELxAa1uag0PeohaW6rc63gQwrtOPkYFFxGtPlkDf4PvqtH4BysUv0tleGc=
+  secret_access_key: &1
+    secure: n/D/qD5Bg2ByMr+/AfYNu1VQgKXTCgEghIgxBG65MQk0S4/N2ZDf8Sb1QvOmmDi8OP4kFLiy+QZWipSOhao90hgRsQ1+jsR9/sDUXkjd5v4d0tFNKQThBRDMtsRPKsq8ZZF0xXxqrKkwVFiDhARFARuJaenufcDv0TSTSsxTYUzlpMfPCaAdJw5C2OudSb3j4+a0VI0dDZ2a7PDnN5aeUhju9WUQUzGVi6GoiQ5GEiggvoV1oHeHEO/cFC+cekV/dpXmifghufwA3CRUCvqum/I2v3gzavO53v8p55AbcbOQDq/4wBMdv15Iq0Gd3kfhfqVY/C2Y0nRGdGOCsL47y5P4l9qJ0Y2v9fCejKZGv9QpYafMoCFbng9ZcSX3xEoHQHNaxUZogK/+5wPWrud9kmvsLDsM4PZJ8QCIomW1r7l4zslqsX1GjHx8Iu3h5wpHDzwFsFTLMcE+F3vXklgjC5DM/j7C65Or01k0707bW9h8uqumfbTcETV5FPVeP/6Ke5NRF5wDg1OEBiv0603vJJHoTVxE9zrLXAdyNtJNSgXqMX94FX2XAfGsGedtVVGSmbMW6Got15SHjwuxv125BSvCGqciYIHllvAeQVFb9MKkAgpp2HU69cTVPGUj8jw7iFVCuOpWSRQqkghOqJh5MiH0ApezwPQpQsCwWOnjFaM=
+  local_dir: dpl_cd_upload
+  skip_cleanup: true
+  on: &2
+    repo: cloudaddy/cloudaddys-project
+  bucket: cloudaddy
+  upload_dir: latest
+- provider: codedeploy
+  access_key_id: AKIAI27RKRZTWC7LOJOQ
+  secret_access_key: *1
   bucket: cloudaddy
   key: latest/cloudaddy-website.zip
   bundle_type: zip
   application: Cloudaddy
   deployment_group: production
-  on:
-    repo: cloudaddy/cloudaddys-project
+  on: *2
 before_deploy:
 - mkdir -p dpl_cd_upload
-- ls -Rahl
 - rm -f .gitignore
 - mv target/cloudaddy-project-*.war dpl_cd_upload/cloudaddy-website.zip
-- ls -Rahl
