@@ -24,4 +24,9 @@ deploy:
 before_deploy:
 - mkdir -p dpl_cd_upload
 - rm -f .gitignore
-- cp -f target/cloudaddy-project-*.war dpl_cd_upload/cloudaddy-website.zip
+- mkdir -p dist
+- cp appspec.yml dist/
+- cp -r deploy/scripts dist/
+- cp target/cloudaddy-project-*.war dist/ROOT.war
+- zip -r dist.zip dist
+- cp dist.zip dpl_cd_upload/cloudaddy-website.zip
