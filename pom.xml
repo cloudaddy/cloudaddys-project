@@ -6,7 +6,7 @@
 	<groupId>edu.neu.cloudaddy</groupId>
 	<artifactId>cloudaddy-project</artifactId>
 	<version>0.1.0</version>
-
+	<packaging>war</packaging>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -29,6 +29,16 @@
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!-- tag::security[] -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -45,18 +55,18 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
+		<tomcat.version>7.0.52</tomcat.version>
 	</properties>
-
 
 	<build>
 		<plugins>
