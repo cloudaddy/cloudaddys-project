@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /cloudaddy-project-*.war
+  - source: /ROOT.war
     destination: /var/lib/tomcat7/webapps
 hooks:
   BeforeInstall:
