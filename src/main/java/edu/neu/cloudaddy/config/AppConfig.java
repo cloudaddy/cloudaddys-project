@@ -1,9 +1,11 @@
 package edu.neu.cloudaddy.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -18,19 +20,30 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "edu.neu.cloudaddy")
+@PropertySource("classpath:application.properties")
 @Import({ WebSecurityConfig.class })
 public class AppConfig  extends WebMvcConfigurerAdapter{
 	private static final String TEMPLATE_RESOLVER_PREFIX = "/resource/templates/";
     private static final String TEMPLATE_RESOLVER_SUFFIX = ".html";
     private static final String TEMPLATE_RESOLVER_TEMPLATE_MODE = "HTML5";
 	
+    @Value("${mySql.url}")
+	private String mysqlUrl;
+    
+    @Value("${mySql.username}")
+	private String mysqlUsername;
+    
+    @Value("${mySql.password}")
+	private String password;
+  
+    
 	@Bean(name = "dataSource")
 	public DriverManagerDataSource dataSource() {
 	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/clouddaddy");
-	    driverManagerDataSource.setUsername("root");
-	    driverManagerDataSource.setPassword("admin");
+	    driverManagerDataSource.setUrl(mysqlUrl);
+	    driverManagerDataSource.setUsername(mysqlUsername);
+	    driverManagerDataSource.setPassword(password);
 	    return driverManagerDataSource;
 	}
 	
