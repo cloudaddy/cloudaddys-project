@@ -39,17 +39,23 @@ public class SearchController {
 	@RequestMapping(value="/search")
 	public String search(Model model, HttpServletRequest request) {
 		try {
-			int suppId = Integer.parseInt(request.getParameter("prod"));
-			ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
-			ArrayList<Product> products = productService.getProductsService(suppId);
-			System.out.println("suppId :" + suppId);
 			HttpSession session = request.getSession();
 			User user = userService.getUserIdService((String) session.getAttribute("username"));
 		    if(user.getId() != 0){
 		      ArrayList<Report> reports = reportService.getReportService(user.getId());
 		      model.addAttribute("reports", reports);
 		    }
-			
+			int suppId = Integer.parseInt(request.getParameter("prod"));
+			ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
+			ArrayList<Product> products = productService.getProductsService(suppId);
+			productService.writeProductsService(suppId);
+			System.out.println("supplier id : " + suppId);
+			String supplier_company = supplierService.getSupplierNameService(suppId);
+			System.out.println("supplier_company" + supplier_company);
+			if(supplier_company ==null)
+				supplier_company ="";
+			productService.saveReportService(suppId, user.getId(), supplier_company);
+
 		    model.addAttribute("username",user.getUsername());
 			model.addAttribute("suppliers", suppliers);
 			model.addAttribute("products", products);

@@ -46,4 +46,25 @@ public class SupplierDaoImp implements SupplierDao{
 
 		return supplierList;
 	}
+	
+	public String getSupplierName(DataSource dataSource, int supplierId){
+		String supplier_com=null;
+		try {
+			connection = dataSource.getConnection();
+			PreparedStatement query = connection
+					.prepareStatement("SELECT company from suppliers where id =?;");
+			query.setInt(1, supplierId);
+			rs = query.executeQuery();
+			rs.next();
+			supplier_com = rs.getString("company");
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("supplier_com : " + supplier_com );
+		return supplier_com;
+		
+	}
 }
+

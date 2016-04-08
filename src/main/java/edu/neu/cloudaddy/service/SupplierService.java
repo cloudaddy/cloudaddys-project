@@ -9,4 +9,5 @@ import edu.neu.cloudaddy.model.Supplier;
 public interface SupplierService {
 
 	ArrayList<Supplier> getSuppliersService();
+	String getSupplierNameService(int suppID);
 }

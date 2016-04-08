@@ -20,7 +20,21 @@ public class ProductServiceImpl implements ProductService{
 	private ProductDao productDao;
 	
 	public ArrayList<Product> getProductsService(int id){
-		return productDao.getProducts(dataSource, id);
+		return productDao.getProducts(dataSource, id);		
+	}
+
+	@Override
+	public void writeProductsService(int id) {
+		productDao.writeProducts(dataSource, id);
 		
 	}
+
+	@Override
+	public void saveReportService(int supplierId, int userId, String company) {
+		productDao.saveReport(dataSource, supplierId, userId, company);
+		
+	}
+
+	
+	
 }

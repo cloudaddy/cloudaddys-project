@@ -9,5 +9,5 @@ import edu.neu.cloudaddy.model.Supplier;
 public interface SupplierDao {
 
 	ArrayList<Supplier> getSuppliers(DataSource dataSource);
-	
+	String getSupplierName(DataSource dataSource, int supplierId);
 }
