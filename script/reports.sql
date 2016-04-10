@@ -1,16 +1,14 @@
-DROP TABLE `reports`;
-
 CREATE TABLE `reports` (
   `Id` mediumint unsigned NOT NULL auto_increment,
   `userId` mediumint,
   `name` varchar(255) default NULL,
-  `attachment` blob 
+  `attachment` blob,
   `deleted` VARCHAR(1),
   `supplier_company` VARCHAR(100),
   `created_on` VARCHAR(10),
   `created_of` VARCHAR(10),
    PRIMARY KEY (Id)
-  
+
 );
 
 
