@@ -1,23 +1,20 @@
 package edu.neu.cloudaddy.dao;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.sql.DataSource;
-
 import org.springframework.stereotype.Repository;
 
 import edu.neu.cloudaddy.model.Product;
 
 @Repository("productDao")
 public class ProductDaoImpl implements ProductDao {
-	String reportName;
 	ResultSet rs;
 	Connection connection;
 
@@ -62,23 +59,38 @@ public class ProductDaoImpl implements ProductDao {
 		return productList;
 	}
 
-	public void writeProducts(DataSource dataSource, int supplierId) {
+	public void saveReport(DataSource dataSource, int supplierId, int userId,
+			String company,String reportName, ArrayList<Product> products) {
 		try {
-			
-			reportName = "Report_" + new Date();
+			System.out.println("inside save");
+			//FileInputStream fis = null;
 			connection = dataSource.getConnection();
+			//connection.setAutoCommit(false);
+			//File file = new File("tmp//" + reportName);
+			//fis = new FileInputStream(file);
 			PreparedStatement query = connection
-					.prepareStatement("select p.id, p.product_code, p.product_name, "
-							+ "p.category, p.list_price, p.standard_cost"
-							+ " from products p where "
-							+ "p.supplier_ids = ? INTO OUTFILE '" + reportName + "'" +
-									"FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n';");
-			query.setInt(1, supplierId);
-			query.execute();
-			System.out.println("query" + query);
-			System.out.println("reportname :" + reportName);
+					.prepareStatement("insert into reports (userId, name, "
+							+ " attachment, deleted, created_on, modified_on, supplier_company)"
+							+ " values (?,?,?,?,?,?,?);");
+			query.setInt(1, userId);
+			query.setString(2, reportName);
+			//query.setAsciiStream(3, fis, (int) file.length());
+			StringBuffer s = new StringBuffer();
+			for(Product p : products){
+				s.append(p.getProduct_code() + "," + p.getProduct_name() + ","+
+			p.getList_price()+","+p.getStandard_cost()+","+p.getCategory()+"\n");
+			}
+			StringReader reader = new StringReader(s.toString());
+			query.setCharacterStream(3, reader , s.toString().length());
+			query.setString(4, "N");
+			query.setString(5, (new SimpleDateFormat("MM-dd-yy")).format(new Date()));
+			query.setString(6, (new SimpleDateFormat("MM-dd-yy")).format(new Date()));
+			query.setString(7, company);
+			query.executeUpdate();
+			System.out.println("query:" + query);
+			connection.commit();
+			//fis.close();
 			connection.close();
-
 		} catch (SQLException ex) {
 			// handle any errors
 			System.out.println("SQLException: " + ex.getMessage());
@@ -86,34 +98,5 @@ public class ProductDaoImpl implements ProductDao {
 			System.out.println("VendorError: " + ex.getErrorCode());
 		} 
 	}
-	
-	public void saveReport(DataSource dataSource, int supplierId, int userId, String company){
-		try{
-			FileInputStream fis = null;
-			connection = dataSource.getConnection();
-			connection.setAutoCommit(false);
-			File file = new File(reportName);
-			fis = new FileInputStream(file);
-			System.out.println("reportName: " + reportName);
-			PreparedStatement query = connection.prepareStatement("insert into reports (userId, name, " +
-					" attachment, deleted, created_on, modified_on, supplier_company)" +
-					" values (?,?,?,?,?,?,?);");
-			query.setInt(1, userId);
-			query.setString(2, reportName);
-			query.setAsciiStream(3,fis, (int) file.length());
-			query.setString(4, "N");
-			query.setString(5, (new Date()).toString());
-			query.setString(6, (new Date()).toString());
-			query.setString(7, company);
-			query.executeUpdate();
-			System.out.println("query:" + query);
-			connection.commit();
-			fis.close();	
-			connection.close();
-		}catch(Exception e){
-			
-		}
-	}
-
 
 }

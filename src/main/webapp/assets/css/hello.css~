@@ -1,7 +1,7 @@
 .outer { font:normal 14px/18px 'latomedium', arial, sans-serif;
 position:relative;
-padding:50px 0 30px 0;
-width:1100px;
+padding:60px 0 5px 0;
+width:1098px;
 background:#eee;
 margin:0 0 50px 0;
 }
@@ -23,11 +23,11 @@ border:1px solid #fff;
 color:#fff;
 }
 .outer thead tr {
-position:absolute;
-top:20px;
-height:60px;
+position:relative;
+top:40px;
+height:30px;
 left:0;
-padding:0px 0px 0px 0px;
+padding:0px 2px 0px 2px;
 }
 .outer tfoot td {
 position:absolute;
@@ -40,13 +40,19 @@ bottom:0;
 left:0
 }
 .outer th, .outer td {
-width:15em; 
+width:25em; 
 text-align:left;
+border:1px solid #8b9dc3;
 }
 .outer th {
 background:#3b5998; 
 color:#fff;}
 
 .outer .dk {background:#fff;
+}
+
+.icon{
+	width:16px;
+	height:16px;
 }
 
