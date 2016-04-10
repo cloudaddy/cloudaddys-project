@@ -109,14 +109,15 @@ public class HelloController {
 		String name = (String) session.getAttribute("username");
 		User user = userService.getUserIdService(name);
 		ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
+
+		if(repoId !="" && repoId!=null)
+			reportService.deleteFileService(repoId);
+		
 		if (user.getId() != 0) {
 			ArrayList<Report> reports = reportService.getReportService(user
 					.getId());
 			model.addAttribute("reports", reports);
 		}
-
-		if(repoId !="" && repoId!=null)
-			reportService.deleteFileService(repoId);
 	
 		model.addAttribute("suppliers", suppliers);
 		model.addAttribute("username", name);

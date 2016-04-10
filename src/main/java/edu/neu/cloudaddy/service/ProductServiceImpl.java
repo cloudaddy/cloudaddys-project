@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.neu.cloudaddy.dao.ProductDao;
+import edu.neu.cloudaddy.model.Inventory_Transaction;
 import edu.neu.cloudaddy.model.Product;
 
 @Service("productService")
@@ -28,13 +29,21 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void writeProductsService(int supplierId,int userId, String company, ArrayList<Product> products) {
+	public void writeProductsService(int supplierId,int userId, String company, 
+			ArrayList<Product> products, ArrayList<Inventory_Transaction> it, int daysOld, int count) {
 		if(products.size()>0){
-			String reportName = "Report_" + 
+			String reportName = "Report_" + daysOld + "_" + count + "_" +
 					(new SimpleDateFormat("MM-dd-yy:HH:mm:ss")).format(new Date())+
 					 ".txt";
-			productDao.saveReport(dataSource, supplierId, userId, company,reportName, products);
+			productDao.saveReport(dataSource, supplierId, userId, company,reportName, products, it);
 		}
+	}
+
+	@Override
+	public ArrayList<Inventory_Transaction> getInventoryTransactionsService(
+			ArrayList<Product> products, int daysOld) {
+		
+		return productDao.getInventoryTransactions(dataSource, products, daysOld);
 	}
 
 }
