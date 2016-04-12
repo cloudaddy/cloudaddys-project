@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import edu.neu.cloudaddy.model.Report;
@@ -24,7 +25,7 @@ import edu.neu.cloudaddy.service.SupplierService;
 import edu.neu.cloudaddy.service.UserService;
 
 @Controller
-public class HelloController {
+public class MainController {
 
 	@Autowired
 	private ThymeleafViewResolver resolver;
@@ -38,8 +39,8 @@ public class HelloController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping("/hello")
-	public String hello(Model model, HttpServletRequest request) {
+	@RequestMapping("/index")
+	public String index(Model model, HttpServletRequest request) {
 		try {
 			Authentication auth = SecurityContextHolder.getContext()
 					.getAuthentication();
@@ -62,7 +63,7 @@ public class HelloController {
 			e.printStackTrace();
 		}
 
-		return "hello";
+		return "index";
 	}
 
 	@RequestMapping(value = "/download")
@@ -70,7 +71,7 @@ public class HelloController {
 			HttpServletResponse response,
 			@RequestParam("report") String repoId, HttpSession session)
 			throws IOException {
-		System.out.println("report id : " + repoId);
+		// System.out.println("report id : " + repoId);
 		String name = (String) session.getAttribute("username");
 		User user = userService.getUserIdService(name);
 		ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
@@ -79,17 +80,17 @@ public class HelloController {
 					.getId());
 			model.addAttribute("reports", reports);
 		}
-		
-		Report report =null;
-		if(repoId !="" && repoId!=null)
+
+		Report report = null;
+		if (repoId != "" && repoId != null)
 			report = reportService.getFileContentService(repoId);
 
 		model.addAttribute("suppliers", suppliers);
 		model.addAttribute("username", name);
-		
-		if(report ==null || report.getAttached()==null)
-			return "/hello";
-		
+
+		if (report == null || report.getAttached() == null)
+			return "/index";
+
 		InputStream input = new FileInputStream("tmp//"
 				+ report.getReportName());
 
@@ -102,26 +103,27 @@ public class HelloController {
 		return null;
 	}
 
-	@RequestMapping(value = "/delete")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(Model model, HttpServletRequest request,
-			@RequestParam("report") String repoId, HttpSession session) {
-		System.out.println("report id : " + repoId);
+			HttpSession session) {
+		String repoId = request.getParameter("report");
+		//System.out.println("report id : " + repoId);
 		String name = (String) session.getAttribute("username");
 		User user = userService.getUserIdService(name);
 		ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
 
-		if(repoId !="" && repoId!=null)
+		if (repoId != "" && repoId != null)
 			reportService.deleteFileService(repoId);
-		
+
 		if (user.getId() != 0) {
 			ArrayList<Report> reports = reportService.getReportService(user
 					.getId());
 			model.addAttribute("reports", reports);
 		}
-	
+
 		model.addAttribute("suppliers", suppliers);
 		model.addAttribute("username", name);
-		return "hello";
+		return "index";
 	}
 
 }

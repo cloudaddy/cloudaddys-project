@@ -7,7 +7,7 @@
 <head>
 <title>generate reports</title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href = "/assets/css/hello.css">
+<link rel="stylesheet" href = "/assets/css/index.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script>
@@ -47,32 +47,32 @@ function validateForm() {
 			<div class="col-sm-12">
 				<div class="col-sm-3">
 					<div class="col-sm-6">
-						<form class="form-horizontal" role="form" th:action="@{/hello}" method="post">
-							<input class="form-control" style="height:30px;width:120px;" type="submit" value="Update Profile" />
+						<form class="form-horizontal" role="form" th:action="@{/index}" method="post">
+							<input class="btn btn-default" type="button" value="Update Profile" />
 						</form>
 					</div>
 					<div class="col-sm-6">
-						<form class="form-horizontal" role="form" th:action="@{/hello}" method="post">
-					 		<input class="form-control" style="height:30px; width:140px;" type="submit" value="Manage Suppliers" />
+						<form class="form-horizontal" role="form" th:action="@{/index}" method="post">
+					 		<input class="btn btn-default" type="button" value="Manage Suppliers" />
 						</form>
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="col-sm-7">
-						<form class="form-horizontal" role="form" th:action="@{/hello}" method="post">
-							<input class="form-control" style="height:30px; width:140px;" type="submit" value="Manage Products" />
+						<form class="form-horizontal" role="form" th:action="@{/index}" method="post">
+							<input class="btn btn-default" type="button" value="Manage Products" />
 						</form>
 					</div>
 					<div class="col-sm-5">
-					<form class="form-horizontal" role="form" th:action="@{/hello}" method="post">
-						<input class="form-control" style="height:30px; width:140px;" type="submit" value="Manage Inventory" />
+					<form class="form-horizontal" role="form" th:action="@{/index}" method="post">
+						<input class="btn btn-default" type="button" value="Manage Inventory" />
 					</form>
 					</div>
 				</div>
 				
 				<div class="col-sm-1" style="float:right;">
-						<form class="form-horizontal" role="form" th:action="@{/hello}" method="post">
-							<input class="form-control" style="height:30px;width:100px;" type="submit" value="Sign Out" />
+						<form class="form-horizontal" role="form" th:action="@{/logout}" method="post">
+							<button class="btn btn-default" type="submit" value="Sign Out" >Sign Out</button>
 						</form>
 					</div>
 				
@@ -84,7 +84,7 @@ function validateForm() {
 				<h4><b>Generate Product Report</b></h4>
 			</div>
 				<form class="form-horizontal" role="form" style="display:inline-block" 
-				th:action="@{/search}" th:object="${suppliers}" method="post" name="reportForm"
+				th:action="@{/report}" th:object="${suppliers}" method="post" name="reportForm"
 				onsubmit="return validateForm()">
 				
 				<div class="form-group">
@@ -129,8 +129,8 @@ function validateForm() {
 				<h4><b>View Reports</b></h4>
 			</div>
 			<div class="col-md-2" style="float:right;">
-					<form th:action="@{/hello}" method="post">
-						<input class="form-control"  style="height:30px;width:140px"; type="submit" value="Refresh Reports" />
+					<form th:action="@{/index}" method="post">
+						<input class="btn btn-default"  type="button" value="Refresh Reports" />
 					</form>
 			</div>
 		</div>
@@ -160,7 +160,11 @@ function validateForm() {
 					<td th:text="${report.created_on}">Unknown</td>
 					<td th:text="${report.modified_on}">Unknown</td>
 					<td><a th:href="@{/download?report={q}(q=${report.id})}"><img class="icon" src="/assets/img/download.png" /></a></td>
-					<td><a th:href="@{/delete?report={q}(q=${report.id})}"><img class="icon" src="/assets/img/delete.ico" /></a></td>
+					<td><form th:action="@{/delete}" method="post">
+							<input type="hidden" name="report" th:value="${report.id}">
+							<input class="icon" type="image" name="submit" alt="Delete" src="/assets/img/delete.ico"/>
+						</form>
+					</td>
 				  </tr>
 			     </tbody>
 			</table>
