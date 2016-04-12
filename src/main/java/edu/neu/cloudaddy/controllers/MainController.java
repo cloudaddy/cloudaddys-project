@@ -91,7 +91,7 @@ public class MainController {
 		if (report == null || report.getAttached() == null)
 			return "/index";
 
-		InputStream input = new FileInputStream("tmp//"
+		InputStream input = new FileInputStream("src//main//resources//tmp//"
 				+ report.getReportName());
 
 		response.setContentType("application/txt");
