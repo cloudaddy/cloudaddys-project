@@ -1,12 +1,7 @@
 package edu.neu.cloudaddy.controllers;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-
-import edu.neu.cloudaddy.config.Application;
 import edu.neu.cloudaddy.model.Report;
 import edu.neu.cloudaddy.model.Supplier;
 import edu.neu.cloudaddy.model.User;
@@ -95,7 +88,8 @@ public class MainController {
 
 		if (report == null || report.getAttached() == null)
 			return "/index";
-		
+		System.out.println(getClass().getResource("/tmp//").getPath());
+		System.out.println(getClass().getResourceAsStream("/tmp//" + report.getReportName()));
 		InputStream input = getClass().getResourceAsStream("/tmp//" + report.getReportName());
 		//InputStream input = new FileInputStream("tmp//"
 			//	+ report.getReportName());
