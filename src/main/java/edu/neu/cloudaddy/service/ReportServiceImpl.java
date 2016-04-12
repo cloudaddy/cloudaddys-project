@@ -37,19 +37,19 @@ public class ReportServiceImpl implements ReportService {
 		try {
 			Writer output = null;
 			
-			File index = new File("src//main//resources//tmp");
+			File index = new File("resources/tmp");
 			
 			if(!index.exists()){
 				index.mkdir();
 			}else{
-				index = new File("src//main//resources//tmp//");
+				index = new File("resources/tmp//");
 				String[] entries = index.list();
 				for (String s : entries) {
 					File currentFile = new File(index.getPath(), s);
 					currentFile.delete();
 				}
 
-				File file = new File("src//main//resources//tmp//" + reportName);
+				File file = new File("resources/tmp//" + reportName);
 				output = new BufferedWriter(new FileWriter(file));
 
 				if(fileContent!=null){
