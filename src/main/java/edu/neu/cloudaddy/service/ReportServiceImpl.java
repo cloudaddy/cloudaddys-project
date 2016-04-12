@@ -36,23 +36,30 @@ public class ReportServiceImpl implements ReportService {
 	public String writefile(String reportName, String fileContent) {
 		try {
 			Writer output = null;
-			File index = new File("tmp//");
-			String[] entries = index.list();
-			for (String s : entries) {
-				File currentFile = new File(index.getPath(), s);
-				currentFile.delete();
-			}
-
-			File file = new File("tmp//" + reportName);
-			output = new BufferedWriter(new FileWriter(file));
-
-			if(fileContent!=null){
-				for(String content: fileContent.split("\n")){
-					output.write(content + "\n");
+			
+			File index = new File("tmp");
+			
+			if(!index.exists()){
+				index.mkdir();
+			}else{
+				index = new File("tmp//");
+				String[] entries = index.list();
+				for (String s : entries) {
+					File currentFile = new File(index.getPath(), s);
+					currentFile.delete();
 				}
+
+				File file = new File("tmp//" + reportName);
+				output = new BufferedWriter(new FileWriter(file));
+
+				if(fileContent!=null){
+					for(String content: fileContent.split("\n")){
+						output.write(content + "\n");
+					}
+				}
+				output.close();
+				System.out.println("File has been written");
 			}
-			output.close();
-			System.out.println("File has been written");
 
 		} catch (Exception e) {
 			System.out.println("Could not create file");
