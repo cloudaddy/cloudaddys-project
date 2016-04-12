@@ -37,8 +37,8 @@ public class ReportServiceImpl implements ReportService {
 		try {
 			Writer output = null;
 			
-			File index = new File(getClass().getResource("/tmp").getPath());
-			
+			//File index = new File("src/main/resources/tmp");
+			File index = new File(getClass().getResource("/").getPath() + "tmp");
 			if(!index.exists()){
 				index.mkdir();
 			}else{

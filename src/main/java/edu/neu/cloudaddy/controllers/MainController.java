@@ -88,8 +88,8 @@ public class MainController {
 
 		if (report == null || report.getAttached() == null)
 			return "/index";
-		System.out.println(getClass().getResource("/tmp//").getPath());
-		System.out.println(getClass().getResourceAsStream("/tmp//" + report.getReportName()));
+		//System.out.println(getClass().getResource("/tmp//").getPath());
+		//System.out.println(getClass().getResourceAsStream("/tmp//" + report.getReportName()));
 		InputStream input = getClass().getResourceAsStream("/tmp//" + report.getReportName());
 		//InputStream input = new FileInputStream("tmp//"
 			//	+ report.getReportName());
