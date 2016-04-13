@@ -2,6 +2,7 @@
 CREATE TABLE `users_password` (
   `id` mediumint(8) unsigned default NULL,
   `password` varchar(255),
+  `enabled` TINYINT(1),
   FOREIGN KEY (`id`) REFERENCES `users`(`id`)
 );
 
