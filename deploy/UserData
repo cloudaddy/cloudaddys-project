@@ -3,6 +3,7 @@
 sudo apt-get -y update
 sudo apt-get -y install awscli
 sudo apt-get -y install ruby2.0
+sudo apt-get -y install unzip
 cd /home/ubuntu
 aws s3 cp s3://aws-codedeploy-us-east-1/latest/install . --region us-east-1
 chmod +x ./install
@@ -11,6 +12,15 @@ sudo ./install auto
 # install tomcat and java
 sudo apt-get -y install tomcat7
 
-
+# configure aws dynamodb session manager for tomcat
+wget https://github.com/aws/aws-dynamodb-session-tomcat/releases/download/v2.0.1/aws-dynamodb-session-tomcat-2.0.1.jar.zip
+unzip aws-dynamodb-session-tomcat-2.0.1.jar.zip
+sudo cp aws-dynamodb-session-tomcat-2.0.1.jar /usr/share/tomcat7/lib/
+echo '<?xml version="1.0" encoding="UTF-8"?>
+  <Context>
+      <WatchedResource>WEB-INF/web.xml</WatchedResource>
+      <Manager className="com.amazonaws.services.dynamodb.sessionmanager.DynamoDBSessionManager"
+               createIfNotExist="true" />
+  </Context>' | sudo tee /var/lib/tomcat7/conf/context.xml
 
 exit 0
