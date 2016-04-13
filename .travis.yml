@@ -11,12 +11,12 @@ deploy:
   on: &2
     repo: cloudaddy/cloudaddys-project
     branch: phase2
-  bucket: cloudaddy-release
+  bucket: cloudaddy-releases
   upload_dir: latest
 - provider: codedeploy
   access_key_id: AKIAIWV6A4KDI5OULCPQ
   secret_access_key: *1
-  bucket: cloudaddy-release
+  bucket: cloudaddy-releases
   key: latest/cloudaddy-website.zip
   bundle_type: zip
   application: Cloudaddy
