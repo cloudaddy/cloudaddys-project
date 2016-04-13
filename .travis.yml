@@ -1,21 +1,25 @@
 language: java
 jdk:
 - openjdk7
+branches:
+  only:
+  - phase2
 deploy:
 - provider: s3
-  access_key_id: AKIAI27RKRZTWC7LOJOQ
+  access_key_id: AKIAIWV6A4KDI5OULCPQ
   secret_access_key: &1
-    secure: n/D/qD5Bg2ByMr+/AfYNu1VQgKXTCgEghIgxBG65MQk0S4/N2ZDf8Sb1QvOmmDi8OP4kFLiy+QZWipSOhao90hgRsQ1+jsR9/sDUXkjd5v4d0tFNKQThBRDMtsRPKsq8ZZF0xXxqrKkwVFiDhARFARuJaenufcDv0TSTSsxTYUzlpMfPCaAdJw5C2OudSb3j4+a0VI0dDZ2a7PDnN5aeUhju9WUQUzGVi6GoiQ5GEiggvoV1oHeHEO/cFC+cekV/dpXmifghufwA3CRUCvqum/I2v3gzavO53v8p55AbcbOQDq/4wBMdv15Iq0Gd3kfhfqVY/C2Y0nRGdGOCsL47y5P4l9qJ0Y2v9fCejKZGv9QpYafMoCFbng9ZcSX3xEoHQHNaxUZogK/+5wPWrud9kmvsLDsM4PZJ8QCIomW1r7l4zslqsX1GjHx8Iu3h5wpHDzwFsFTLMcE+F3vXklgjC5DM/j7C65Or01k0707bW9h8uqumfbTcETV5FPVeP/6Ke5NRF5wDg1OEBiv0603vJJHoTVxE9zrLXAdyNtJNSgXqMX94FX2XAfGsGedtVVGSmbMW6Got15SHjwuxv125BSvCGqciYIHllvAeQVFb9MKkAgpp2HU69cTVPGUj8jw7iFVCuOpWSRQqkghOqJh5MiH0ApezwPQpQsCwWOnjFaM=
+    secure: 2FYrGzJN8hQteYXjNKZR1QQmbj+WLr/pU1zK7YgOQFtOzQEc7lsSsa1GiDEjtAbQ3ULUmFyv6uKIc8opQKvTc59foIButiZEDhAmO8cjqBDu+qfp75CpqpXt6FmNEzWcP8yA+axlSxpbkFEDB7HMRSBlXljMuwudj4h64c4KZTxUTbcQd6BGjTVh3eLRZ8VM42TQTdtWhU3barCXmbbyKiYtOaTkUsc11jPyfLt1oXVAJqGwYU+jboLbK04FZqOBf01QXTTsQPTxVbA+eTayVufxPOX7thHjvsUVg/1To+eKukh52t9c1SuEjOmgh9F5nAHirTAEXLKtW+oOg9HXM19+FjqgdTwE46WWauWx4HaRY69CAeJjUc8+tXapbByBzjxVG5+sqTXwXbo/noVHqTxpeVnVuhMk0GuaKN6ylS5gWQDhlvqtw+X9qLqW/WUgN4xI59SisAYiauWjtSN8TVAREg/I3NUCXBFrqL4tt+IRoOoVMOXizf4HbFaGYNASSzk1UZqjFkc/uS/tNOGCDjEw2mIc6RS5ie0InXLDCDsd5oMn/U9WXt/YjMu8/q6a4BnShNzXDcIuxkYBq0usr2kltZpvbBpUSNpZ6+jDFeynIOcTbNbq6PR937qu5wSodJpqse3MU+k6UpaXN9N1wMjRBfYapvsCdjoU2lKb/WA=
   local_dir: dpl_cd_upload
   skip_cleanup: true
   on: &2
     repo: cloudaddy/cloudaddys-project
-  bucket: cloudaddy
+    branch: phase2
+  bucket: cloudaddy-release
   upload_dir: latest
 - provider: codedeploy
-  access_key_id: AKIAI27RKRZTWC7LOJOQ
+  access_key_id: AKIAIWV6A4KDI5OULCPQ
   secret_access_key: *1
-  bucket: cloudaddy
+  bucket: cloudaddy-release
   key: latest/cloudaddy-website.zip
   bundle_type: zip
   application: Cloudaddy
