@@ -1,6 +1,9 @@
 language: java
 jdk:
 - openjdk7
+branches:
+  only:
+    - phase2
 deploy:
 - provider: s3
   access_key_id: AKIAIWV6A4KDI5OULCPQ
