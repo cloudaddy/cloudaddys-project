@@ -23,4 +23,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
                createIfNotExist="true" />
   </Context>' | sudo tee /var/lib/tomcat7/conf/context.xml
 
+# deploy the Website
+aws s3 cp s3://cloudaddy-releases/latest/cloudaddy-website.zip . --region us-west-2
+unzip -o cloudaddy-website.zip
+sudo rm -rf /var/lib/tomcat7/webapps/ROOT
+sudo rm -f /var/lib/tomcat7/webapps/ROOT.war
+sudo mv ROOT.war /var/lib/tomcat7/webapps/
+sudo service tomcat7 restart
+
 exit 0
