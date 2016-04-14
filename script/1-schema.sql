@@ -543,7 +543,7 @@ DEFAULT CHARACTER SET = utf8;
 ----------------------------------------------------------
 -- Table users
 --------------------------------------------------------
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `cloudaddy`.`users` (
   `id` mediumint(8) unsigned NOT NULL auto_increment,
   `username` varchar(255) default NULL,
   `email` varchar(255) default NULL,
@@ -561,16 +561,17 @@ CREATE TABLE `users` (
 ---------------------------------------------------
 -- table users_passwords
 --------------------------------------------------
-CREATE TABLE `users_password` (
+CREATE TABLE `cloudaddy`.`users_password` (
   `id` mediumint(8) unsigned default NULL,
   `password` varchar(255),
+  `enabled` TINYINT(1),
   FOREIGN KEY (`id`) REFERENCES `users`(`id`)
 );
 
 -------------------------------------------------
 -- table Reports
 -------------------------------------------------
-CREATE TABLE `reports` (
+CREATE TABLE `cloudaddy`.`reports` (
   `Id` mediumint unsigned NOT NULL auto_increment,
   `userId` mediumint,
   `name` varchar(255) default NULL,
