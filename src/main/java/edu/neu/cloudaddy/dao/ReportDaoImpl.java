@@ -23,7 +23,7 @@ public class ReportDaoImpl implements ReportDao{
 			connection = dataSource.getConnection();
 			PreparedStatement query = connection
 					.prepareStatement("select * from reports where userId =? " +
-							"and deleted = 'N';");
+							"and deleted = 'N' order by created_on desc LIMIT 50;");
 			query.setInt(1,userId);
 			//System.out.println("query : " + query);
 			rs = query.executeQuery();

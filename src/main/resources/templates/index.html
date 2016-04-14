@@ -41,43 +41,12 @@ function validateForm() {
 					<h4><b th:text=" ${username}"></b></h4>
 				</div>
 			</div>
-		</div>
-	
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="col-sm-3">
-					<div class="col-sm-6">
-						<form class="form-horizontal" role="form" th:action="@{/index}" method="post">
-							<input class="btn btn-default" type="button" value="Update Profile" />
-						</form>
-					</div>
-					<div class="col-sm-6">
-						<form class="form-horizontal" role="form" th:action="@{/index}" method="post">
-					 		<input class="btn btn-default" type="button" value="Manage Suppliers" />
-						</form>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="col-sm-7">
-						<form class="form-horizontal" role="form" th:action="@{/index}" method="post">
-							<input class="btn btn-default" type="button" value="Manage Products" />
-						</form>
-					</div>
-					<div class="col-sm-5">
-					<form class="form-horizontal" role="form" th:action="@{/index}" method="post">
-						<input class="btn btn-default" type="button" value="Manage Inventory" />
-					</form>
-					</div>
-				</div>
-				
-				<div class="col-sm-1" style="float:right;">
-						<form class="form-horizontal" role="form" th:action="@{/logout}" method="post">
-							<button class="btn btn-default" type="submit" value="Sign Out" >Sign Out</button>
-						</form>
-					</div>
-				
+		    <div class="col-sm-1" style="float:right;">
+				<form class="form-horizontal" role="form" th:action="@{/logout}" method="post">
+					<button class="btn btn-default" type="submit" value="Sign Out" >Sign Out</button>
+				</form>
 			</div>
-		</div>
+	</div>
 		<hr/>
 		<div class="row">
 			<div class="col-md-12">
@@ -88,7 +57,7 @@ function validateForm() {
 				onsubmit="return validateForm()">
 				
 				<div class="form-group">
-				<label class="control-label col-sm-10" for="prod">Select Supplier</label>
+					<label class="control-label col-sm-10" for="prod">Select Supplier</label>
 					<div class="col-sm-2">
 			   			<select th:name="prod" style="height:30px;width:100px;" class="form-control">
 							<option th:each="supplier : ${suppliers}" 
@@ -116,7 +85,7 @@ function validateForm() {
 					<div class="col-sm-9">
 					</div>
 					<div class="col-sm-2">
-						<input class="form-control"  style="height:30px;width:130px;" type="submit" value="Generate Report" />
+						<input class="btn btn-default" type="submit" value="Generate Report" />
 					</div>
 				</div>
 				
@@ -127,11 +96,6 @@ function validateForm() {
 		<div class="row">
 			<div class="col-md-10">
 				<h4><b>View Reports</b></h4>
-			</div>
-			<div class="col-md-2" style="float:right;">
-					<form th:action="@{/index}" method="post">
-						<input class="btn btn-default"  type="button" value="Refresh Reports" />
-					</form>
 			</div>
 		</div>
 		<div class="outer">
