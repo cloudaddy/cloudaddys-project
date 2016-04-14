@@ -25,6 +25,7 @@ deploy:
   application: Cloudaddy
   deployment_group: production
   on: *2
+  region: us-west-2
 before_deploy:
 - mkdir -p dpl_cd_upload
 - rm -f .gitignore
