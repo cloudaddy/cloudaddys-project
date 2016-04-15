@@ -29,7 +29,7 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public Report getFileContentService(String repoName) {
 		Report report = reportDao.getFileContent(dataSource, repoName);
-		writefile(report.getReportName(), report.getAttached());
+		//writefile(report.getReportName(), report.getAttached());
 		return report;
 	}
 

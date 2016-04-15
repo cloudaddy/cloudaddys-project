@@ -1,6 +1,7 @@
 package edu.neu.cloudaddy.controllers;
+
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -88,26 +89,32 @@ public class MainController {
 
 		if (report == null || report.getAttached() == null)
 			return "/index";
-		//System.out.println(getClass().getResource("/tmp//").getPath());
-		//System.out.println(getClass().getResourceAsStream("/tmp//" + report.getReportName()));
-		InputStream input = getClass().getResourceAsStream("/tmp//" + report.getReportName());
-		//InputStream input = new FileInputStream("tmp//"
-			//	+ report.getReportName());
-
+		//InputStream input = getClass().getResourceAsStream(
+		//		"/tmp//" + report.getReportName());
 		response.setContentType("application/txt");
 		response.setContentLength(report.getAttached().length());
 		response.setHeader("Content-Disposition", "attachment; filename=\""
 				+ report.getReportName() + "\"");
-
-		FileCopyUtils.copy(input, response.getOutputStream());
-		return null;
+		
+		/*File file = new File(report.getReportName());
+		FileOutputStream fout = new FileOutputStream(file);
+		byte[] contentInBytes = report.getAttached().getBytes();
+		fout.write(contentInBytes);
+		fout.flush();
+		fout.close();
+		FileInputStream fis = new FileInputStream(file);*/
+		
+		StringReader reader = new StringReader(report.getAttached());
+		//System.out.println("input" + input);
+		FileCopyUtils.copy(reader, response.getWriter());
+		return "index";
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(Model model, HttpServletRequest request,
 			HttpSession session) {
 		String repoId = request.getParameter("report");
-		//System.out.println("report id : " + repoId);
+		// System.out.println("report id : " + repoId);
 		String name = (String) session.getAttribute("username");
 		User user = userService.getUserIdService(name);
 		ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
