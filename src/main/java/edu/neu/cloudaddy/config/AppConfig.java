@@ -9,6 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.TemplateEngine;
@@ -17,68 +18,74 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
+import edu.neu.cloudaddy.interceptors.SourceServerAddressInteceptor;
+
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "edu.neu.cloudaddy")
 @PropertySource("classpath:application.properties")
 @Import({ WebSecurityConfig.class })
-public class AppConfig  extends WebMvcConfigurerAdapter{
+public class AppConfig extends WebMvcConfigurerAdapter {
 	private static final String TEMPLATE_RESOLVER_PREFIX = "/resource/templates/";
-    private static final String TEMPLATE_RESOLVER_SUFFIX = ".html";
-    private static final String TEMPLATE_RESOLVER_TEMPLATE_MODE = "HTML5";
-	
-    @Value("${mySql.url}")
+	private static final String TEMPLATE_RESOLVER_SUFFIX = ".html";
+	private static final String TEMPLATE_RESOLVER_TEMPLATE_MODE = "HTML5";
+
+	@Value("${mySql.url}")
 	private String mysqlUrl;
-    
-    @Value("${mySql.username}")
+
+	@Value("${mySql.username}")
 	private String mysqlUsername;
-    
-    @Value("${mySql.password}")
+
+	@Value("${mySql.password}")
 	private String password;
-  
-    
+
 	@Bean(name = "dataSource")
 	public DriverManagerDataSource dataSource() {
-	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    driverManagerDataSource.setUrl(mysqlUrl);
-	    driverManagerDataSource.setUsername(mysqlUsername);
-	    driverManagerDataSource.setPassword(password);
-	    return driverManagerDataSource;
+		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+		driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		driverManagerDataSource.setUrl(mysqlUrl);
+		driverManagerDataSource.setUsername(mysqlUsername);
+		driverManagerDataSource.setPassword(password);
+		return driverManagerDataSource;
 	}
-	
-	 @Bean
-	    public ViewResolver viewResolver() {
-	        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-	        viewResolver.setTemplateEngine((SpringTemplateEngine) templateEngine());
 
-	        return viewResolver;
-	    }
+	@Bean
+	public ViewResolver viewResolver() {
+		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+		viewResolver.setTemplateEngine((SpringTemplateEngine) templateEngine());
 
-	    @Bean
-	    public TemplateEngine templateEngine() {
-	        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-	        templateEngine.setTemplateResolver(templateResolver());
+		return viewResolver;
+	}
 
-	        return templateEngine;
-	    }
+	@Bean
+	public TemplateEngine templateEngine() {
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(templateResolver());
 
-	    @Bean
-	    public TemplateResolver templateResolver() {
-	        TemplateResolver templateResolver = new ServletContextTemplateResolver();
-	        templateResolver.setPrefix(TEMPLATE_RESOLVER_PREFIX);
-	        templateResolver.setSuffix(TEMPLATE_RESOLVER_SUFFIX);
-	        templateResolver.setTemplateMode(TEMPLATE_RESOLVER_TEMPLATE_MODE);
+		return templateEngine;
+	}
 
-	        return templateResolver;
-	    }
-	
+	@Bean
+	public TemplateResolver templateResolver() {
+		TemplateResolver templateResolver = new ServletContextTemplateResolver();
+		templateResolver.setPrefix(TEMPLATE_RESOLVER_PREFIX);
+		templateResolver.setSuffix(TEMPLATE_RESOLVER_SUFFIX);
+		templateResolver.setTemplateMode(TEMPLATE_RESOLVER_TEMPLATE_MODE);
+
+		return templateResolver;
+	}
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/") .setCachePeriod(31556926);
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(31556926);
 		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
-	    registry.addResourceHandler("/css/**").addResourceLocations("/css/");
-	    registry.addResourceHandler("/img/**").addResourceLocations("/img/");
+		registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+		registry.addResourceHandler("/img/**").addResourceLocations("/img/");
 	}
-	   
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		  registry.addInterceptor(new SourceServerAddressInteceptor());
+	}
+
 }
