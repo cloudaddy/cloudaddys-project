@@ -19,6 +19,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
          http
+         .sessionManagement()
+         .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+         .sessionFixation().none().and()
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/", "/home","/assets/**","/favicon.ico").permitAll()
@@ -29,12 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .logout()
-                .permitAll()
-            ;
-         
-         http
-         .sessionManagement()
-         .sessionCreationPolicy(SessionCreationPolicy.NEVER);
+                .permitAll();
     }
 
     @Autowired
