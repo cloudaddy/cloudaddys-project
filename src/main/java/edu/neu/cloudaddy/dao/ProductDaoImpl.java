@@ -1,10 +1,7 @@
 package edu.neu.cloudaddy.dao;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -116,17 +113,17 @@ public class ProductDaoImpl implements ProductDao {
 			}
 			
 			// creating new report generation code
-						File file = new File(reportName);
+			/*			File file = new File(reportName);
 						fos = new FileOutputStream(file);
 						byte[] contentInBytes = s.toString().getBytes();
 						fos.write(contentInBytes);
 						fos.flush();
 						fos.close();
 						fis = new FileInputStream(file);
-						query.setAsciiStream(3, fis, (int) file.length());
+						query.setAsciiStream(3, fis, (int) file.length());*/
 						// -----------
-			//StringReader reader = new StringReader(s.toString());
-			//query.setCharacterStream(3, reader, s.toString().length());
+			StringReader reader = new StringReader(s.toString());
+			query.setCharacterStream(3, reader, s.toString().length());
 			query.setString(4, "N");
 			query.setString(5,
 					(new SimpleDateFormat("MM-dd-yy")).format(new Date()));
@@ -142,13 +139,7 @@ public class ProductDaoImpl implements ProductDao {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	public ArrayList<Inventory_Transaction> getInventoryTransactions(

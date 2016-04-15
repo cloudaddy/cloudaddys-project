@@ -96,14 +96,6 @@ public class MainController {
 		response.setHeader("Content-Disposition", "attachment; filename=\""
 				+ report.getReportName() + "\"");
 		
-		/*File file = new File(report.getReportName());
-		FileOutputStream fout = new FileOutputStream(file);
-		byte[] contentInBytes = report.getAttached().getBytes();
-		fout.write(contentInBytes);
-		fout.flush();
-		fout.close();
-		FileInputStream fis = new FileInputStream(file);*/
-		
 		StringReader reader = new StringReader(report.getAttached());
 		//System.out.println("input" + input);
 		FileCopyUtils.copy(reader, response.getWriter());
