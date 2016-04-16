@@ -13,6 +13,7 @@ import edu.neu.cloudaddy.controllers.HomeController;
 
 public class MvcTest {
 
+	
 	private MockMvc mockMvc;
 
 	@Before
@@ -22,13 +23,13 @@ public class MvcTest {
 	}
 
 	@Test
-	public void simple() throws Exception {
-		standaloneSetup(new HomeController())
-				.build()
+	public void testController() throws Exception {
+			mockMvc
 				.perform(get("/"))
 				.andExpect(status().isOk())
 				.andExpect(
 						content().contentType("text/plain;charset=ISO-8859-1"))
 				.andExpect(content().string("home"));
 	}
+	
 }
