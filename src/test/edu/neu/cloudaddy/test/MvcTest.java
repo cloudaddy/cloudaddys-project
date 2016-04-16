@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import edu.neu.cloudaddy.controllers.HomeController;
 
-public class MvcTestController {
+public class MvcTest {
 
 	private MockMvc mockMvc;
 
