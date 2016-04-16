@@ -62,9 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	while (i < 2) {
     		String password = "user";
     		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    		String hashedPassword = passwordEncoder.encode(password);
+    		System.out.println("INSERT INTO `users_password` (`id`,`password`,`enabled`) VALUES");
+    		int count =2;
+    		for(int j=102; j<199; j++){
+    			String pass =password + count;
+    			String hashedPassword = passwordEncoder.encode(pass);
+    			System.out.println("(" + j + ", \"" + hashedPassword + "\", " + "\"1\"),");
+    			count++;
+    		}
 
-    		System.out.println(hashedPassword);
     		i++;
     	}
     }*/
