@@ -11,5 +11,6 @@ sudo ./install auto
 
 # install tomcat and java
 sudo apt-get -y install tomcat7
-
+# delete the default page
+sudo rm -rf /var/lib/tomcat7/webapps/ROOT
 exit 0
