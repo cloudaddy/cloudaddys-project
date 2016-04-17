@@ -6,7 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.session.data.redis.config.ConfigureRedisAction;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,6 +25,7 @@ import edu.neu.cloudaddy.interceptors.SourceServerAddressInteceptor;
 
 @EnableWebMvc
 @Configuration
+@EnableRedisHttpSession
 @ComponentScan(basePackages = "edu.neu.cloudaddy")
 @PropertySource("classpath:application.properties")
 @Import({ WebSecurityConfig.class })
@@ -87,5 +91,14 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public void addInterceptors(InterceptorRegistry registry) {
 		  registry.addInterceptor(new SourceServerAddressInteceptor());
 	}
-
+	
+	@Bean
+    public JedisConnectionFactory connectionFactory() {
+            return new JedisConnectionFactory(); 
+    }
+	
+	@Bean
+	public static ConfigureRedisAction configureRedisAction() {
+	    return ConfigureRedisAction.NO_OP;
+	}
 }
