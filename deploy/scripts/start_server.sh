@@ -1,3 +1,3 @@
 #!/bin/bash -ex
 sleep 1m
-sudo service tomcat7 start
+sudo service tomcat7 restart
