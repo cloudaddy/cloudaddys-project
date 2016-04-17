@@ -20,8 +20,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
          http
          .sessionManagement()
-         .sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
-         //.sessionFixation().none().and()
+         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS).and()
+//         .sessionFixation().none().and()
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/", "/home","/assets/**","/favicon.ico").permitAll()
