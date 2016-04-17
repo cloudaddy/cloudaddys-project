@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sleep 2m
 result=$(curl -s http://localhost:8080/)
 
 if [[ "$result" =~ "Cloudaddy" ]]; then
