@@ -12,7 +12,7 @@ validate(){
 }
 
 n=0
-until [ $n -ge 5 ]
+until [ $n -ge 10 ]
 do
   validate && exit 0  # substitute your command here
   n=$[$n+1]
