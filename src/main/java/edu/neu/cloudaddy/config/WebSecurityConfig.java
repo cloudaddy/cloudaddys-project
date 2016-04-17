@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
 	DataSource dataSource;
     
-    String user = "select u.username, p.password from users u, users_password p" +
+    String user = "select u.username, p.password, p.enabled from users u, users_password p" +
     		" where u.username=? and u.id=p.id";
     
     String authority="select username, authority from authorities where username = ?";
