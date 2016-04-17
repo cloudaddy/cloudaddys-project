@@ -19,9 +19,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
          http
-         .sessionManagement()
-         .sessionCreationPolicy(SessionCreationPolicy.NEVER)
-         .sessionFixation().none().and()
+//         .sessionManagement()
+//         .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+//         .sessionFixation().none().and()
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/", "/home","/assets/**","/favicon.ico").permitAll()
@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
 	DataSource dataSource;
     
-    String user = "select u.username, p.password, p.enabled from users u, users_password p" +
+    String user = "select u.username, p.password from users u, users_password p" +
     		" where u.username=? and u.id=p.id";
     
     String authority="select username, authority from authorities where username = ?";
