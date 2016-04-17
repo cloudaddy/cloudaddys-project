@@ -582,7 +582,6 @@ CREATE TABLE `cloudaddy`.`reports` (
   `created_on` VARCHAR(10),
   `modified_on` VARCHAR(10),
    PRIMARY KEY (Id)
-  
 );
 
 --------------------------------------------------

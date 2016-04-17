@@ -582,8 +582,14 @@ CREATE TABLE `cloudaddy`.`reports` (
   `created_on` VARCHAR(10),
   `modified_on` VARCHAR(10),
    PRIMARY KEY (Id)
-  
 );
+
+--------------------------------------------------
+-- table authorities
+-------------------------------------------------
+create table `authorities` ( `username` varchar(50) not null,`authority` varchar(50) not null);
+--------------------------------------------------
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
