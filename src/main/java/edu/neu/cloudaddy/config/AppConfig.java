@@ -6,7 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.session.data.redis.config.ConfigureRedisAction;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
@@ -42,6 +44,12 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Value("${mySql.password}")
 	private String password;
+
+	@Value("${redis.host}")
+	private String redisHostName;
+
+	@Value("${redis.port}")
+	private int redisPort;
 
 	@Bean(name = "dataSource")
 	public DriverManagerDataSource dataSource() {
@@ -86,19 +94,36 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/css/**").addResourceLocations("/css/");
 		registry.addResourceHandler("/img/**").addResourceLocations("/img/");
 	}
-	
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		  registry.addInterceptor(new SourceServerAddressInteceptor());
+		registry.addInterceptor(new SourceServerAddressInteceptor());
 	}
-	
+
 	@Bean
-    public JedisConnectionFactory connectionFactory() {
-            return new JedisConnectionFactory(); 
-    }
-	
+	JedisConnectionFactory jedisConnectionFactory() {
+		JedisConnectionFactory factory = new JedisConnectionFactory();
+		factory.setHostName(redisHostName);
+		factory.setPort(redisPort);
+		factory.setUsePool(true);
+		return factory;
+	}
+
+	@Bean
+	RedisTemplate<Object, Object> redisTemplate() {
+		RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<Object, Object>();
+		redisTemplate.setConnectionFactory(jedisConnectionFactory());
+		return redisTemplate;
+	}
+
+	@Bean
+	RedisCacheManager cacheManager() {
+		RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate());
+		return redisCacheManager;
+	}
+
 	@Bean
 	public static ConfigureRedisAction configureRedisAction() {
-	    return ConfigureRedisAction.NO_OP;
+		return ConfigureRedisAction.NO_OP;
 	}
 }
