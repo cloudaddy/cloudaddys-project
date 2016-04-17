@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
          http
          .sessionManagement()
-         .sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
+         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS).and()
          //.sessionFixation().none().and()
             .csrf().disable()
             .authorizeRequests()
@@ -28,10 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
-                .loginPage("/login")
+                .loginPage("/login").failureUrl("/login?error")
+                .defaultSuccessUrl("/index")
                 .permitAll()
                 .and()
-            .logout()
+                .logout().logoutSuccessUrl("/login?logout")
                 .permitAll();
     }
 
