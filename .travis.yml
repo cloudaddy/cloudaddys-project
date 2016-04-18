@@ -13,7 +13,7 @@ deploy:
   skip_cleanup: true
   on: &2
     repo: cloudaddy/cloudaddys-project
-    branch: phase2
+    branch: phase3
   bucket: cloudaddy-releases
   upload_dir: latest
 - provider: codedeploy
