@@ -3,7 +3,7 @@ jdk:
 - openjdk7
 branches:
   only:
-    - phase2
+    - phase3
 deploy:
 - provider: s3
   access_key_id: AKIAIWV6A4KDI5OULCPQ
