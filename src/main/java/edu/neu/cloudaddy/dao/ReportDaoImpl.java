@@ -17,7 +17,7 @@ public class ReportDaoImpl implements ReportDao{
 	Connection connection;
 	
 	@Override
-	public ArrayList<Report> getReports(DataSource dataSource, int userId) {
+	public ArrayList<Report> getReports(DataSource dataSource, int userId) throws SQLException {
 		ArrayList<Report> reports = new ArrayList<>();
 		try{
 			connection = dataSource.getConnection();
@@ -47,22 +47,20 @@ public class ReportDaoImpl implements ReportDao{
 				
 				reports.add(report);
 			}
-			for(Report r: reports){
-				System.out.println("report : " + r.getId()+ " : " +  r.getReportName());
-			}
-			connection.close();
 		}catch(SQLException ex){
 			// handle any errors
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		
+		finally{
+			connection.close();
+		}
 		return reports;
 	}
 
 	@Override
-	public Report getFileContent(DataSource dataSource, String repoId) {
+	public Report getFileContent(DataSource dataSource, String repoId) throws SQLException {
 		String content;
 		Report report=null;
 		try{
@@ -83,11 +81,13 @@ public class ReportDaoImpl implements ReportDao{
 				System.out.println("content:" + content);
 				
 			}
-			connection.close();
+			
 		}catch(SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
+		}finally{
+			connection.close();
 		}
 		return report;
 		
@@ -95,18 +95,21 @@ public class ReportDaoImpl implements ReportDao{
 	}
 
 	@Override
-	public void deleteFile(DataSource dataSource, String repoId) {
+	public void deleteFile(DataSource dataSource, String repoId) throws SQLException {
 		try{
 			connection = dataSource.getConnection();
 			PreparedStatement query = connection
 					.prepareStatement("update reports set deleted = 'Y' where id=?");
 			query.setInt(1,Integer.parseInt(repoId));	
 			query.execute();
-			connection.close();
+			
 		}catch(SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		finally{
+			connection.close();
 		}
 	}
 
