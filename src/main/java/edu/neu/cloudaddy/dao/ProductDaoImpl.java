@@ -91,12 +91,14 @@ public class ProductDaoImpl implements ProductDao {
 			}
 			s.append("\n\n");
 			s.append("------------------APPENDING PRODUCT TRANSACTION DATA--------------------");
+			s.append("\n");
 			if (it.size() > 0) {
 				if (it != null && it.get(0) != null) {
 					s.append("---------------Inventory List Per product------------");
 					s.append("TANSACTION_ID | transaction_type | transaction_created_date |"
 							+ "transaction_modified_date | product_id | quantity | purchase_order_id |"
 							+ "customer_order_id | comments");
+					s.append("\n");
 					for (Inventory_Transaction i : it) {
 
 						s.append(i.getId() + "," + i.getTransaction_type()
@@ -196,7 +198,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	}
 
-	private Date getDate(int daysOld) {
+	public static Date getDate(int daysOld) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		cal.add(Calendar.DATE, -daysOld);
