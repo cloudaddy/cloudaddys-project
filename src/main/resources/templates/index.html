@@ -6,15 +6,12 @@
 	layout:decorator="master/layout">
 <head>
 <title>generate reports</title>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href = "/assets/css/index.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script>
 function validateForm() {
     var daysOld = document.forms["reportForm"]["daysOld"].value;
     var count = document.forms["reportForm"]["count"].value;
-    
+
     if (daysOld == null || daysOld == "" || count == null || count == "") {
         alert("Field must be filled out");
         return false;
@@ -52,35 +49,35 @@ function validateForm() {
 			<div class="col-md-12">
 				<h4><b>Generate Product Report</b></h4>
 			</div>
-				<form class="form-horizontal" role="form" style="display:inline-block" 
+				<form class="form-horizontal" role="form" style="display:inline-block"
 				th:action="@{/report}" th:object="${suppliers}" method="post" name="reportForm"
 				onsubmit="return validateForm()">
-				
+
 				<div class="form-group">
 					<label class="control-label col-sm-10" for="prod">Select Supplier</label>
 					<div class="col-sm-2">
 			   			<select th:name="prod" style="height:30px;width:100px;" class="form-control">
-							<option th:each="supplier : ${suppliers}" 
-					  			th:value="${supplier.getId()}" 
+							<option th:each="supplier : ${suppliers}"
+					  			th:value="${supplier.getId()}"
 			 		  			th:text="${supplier.getCompany()}" />
 						</select>
-					</div>	
+					</div>
 				</div>
-			
+
 				<div class="form-group">
 					<label class="control-label col-sm-10" for="daysOld">Reports Dating back to days</label>
 					<div class="col-sm-2">
 						<input class="form-control" style="height:30px;width:100px;" type="text" name="daysOld" maxlength="5"  placeholder="60"/>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 				<label class="control-label col-sm-10" for="count">Select Count</label>
 					<div class="col-sm-2">
 						<input class="form-control" style="height:30px;width:100px;" type="text" name="count" maxlength="5" placeholder="1"/>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-sm-9">
 					</div>
@@ -88,11 +85,11 @@ function validateForm() {
 						<input class="btn btn-default" type="submit" value="Generate Report" />
 					</div>
 				</div>
-				
+
 			</form>
 		</div>
 		<hr/>
-		
+
 		<div class="row">
 			<div class="col-md-10">
 				<h4><b>View Reports</b></h4>
@@ -109,7 +106,7 @@ function validateForm() {
 					<th scope="col">Created On</th>
 					<th scope="col">Last Modified</th>
 					<th scope="col">Attachment</th>
-					<th scope="col">delete</th> 
+					<th scope="col">delete</th>
 			        </tr>
 			      </thead>
 			      <tfoot>
@@ -135,7 +132,7 @@ function validateForm() {
 			</div>
 		</div>
 		<hr/>
-		
+
 	</div>
 </body>
 </html>
