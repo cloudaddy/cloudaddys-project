@@ -10,6 +10,6 @@ import edu.neu.cloudaddy.model.Report;
 public interface ReportDao {
 
 	ArrayList<Report> getReports(DataSource dataSource, int userId) throws SQLException;
-	Report getFileContent(DataSource dataSource, String repoName);
-	void deleteFile(DataSource dataSource, String repoId);
+	Report getFileContent(DataSource dataSource, String repoName) throws SQLException;
+	void deleteFile(DataSource dataSource, String repoId) throws SQLException;
 }

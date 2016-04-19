@@ -1,5 +1,7 @@
 package edu.neu.cloudaddy.service;
 
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	
 	@Override
-	public User getUserIdService(String username) {
+	public User getUserIdService(String username) throws SQLException {
 		return userDao.getUserId(dataSource, username);
 	}
 

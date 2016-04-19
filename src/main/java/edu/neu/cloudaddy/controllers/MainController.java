@@ -2,6 +2,7 @@ package edu.neu.cloudaddy.controllers;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,58 +71,78 @@ public class MainController {
 			HttpServletResponse response,
 			@RequestParam("report") String repoId, HttpSession session)
 			throws IOException {
-		// System.out.println("report id : " + repoId);
-		String name = (String) session.getAttribute("username");
-		User user = userService.getUserIdService(name);
-		ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
-		if (user.getId() != 0) {
-			ArrayList<Report> reports = reportService.getReportService(user
-					.getId());
-			model.addAttribute("reports", reports);
+		try {
+			String name = (String) session.getAttribute("username");
+			User user = null;
+			try {
+				user = userService.getUserIdService(name);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ArrayList<Supplier> suppliers = null;
+			try {
+				suppliers = supplierService.getSuppliersService();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (user.getId() != 0) {
+				ArrayList<Report> reports = reportService.getReportService(user
+						.getId());
+				model.addAttribute("reports", reports);
+			}
+
+			Report report = null;
+			if (repoId != "" && repoId != null)
+				report = reportService.getFileContentService(repoId);
+
+			model.addAttribute("suppliers", suppliers);
+			model.addAttribute("username", name);
+
+			if (report == null || report.getAttached() == null)
+				return "/index";
+
+			response.setContentType("application/txt");
+			response.setContentLength(report.getAttached().length());
+			response.setHeader("Content-Disposition", "attachment; filename=\""
+					+ report.getReportName() + "\"");
+
+			StringReader reader = new StringReader(report.getAttached());
+			// System.out.println("input" + input);
+			FileCopyUtils.copy(reader, response.getWriter());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		Report report = null;
-		if (repoId != "" && repoId != null)
-			report = reportService.getFileContentService(repoId);
-
-		model.addAttribute("suppliers", suppliers);
-		model.addAttribute("username", name);
-
-		if (report == null || report.getAttached() == null)
-			return "/index";
-		//InputStream input = getClass().getResourceAsStream(
-		//		"/tmp//" + report.getReportName());
-		response.setContentType("application/txt");
-		response.setContentLength(report.getAttached().length());
-		response.setHeader("Content-Disposition", "attachment; filename=\""
-				+ report.getReportName() + "\"");
-		
-		StringReader reader = new StringReader(report.getAttached());
-		//System.out.println("input" + input);
-		FileCopyUtils.copy(reader, response.getWriter());
 		return "index";
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(Model model, HttpServletRequest request,
 			HttpSession session) {
-		String repoId = request.getParameter("report");
-		// System.out.println("report id : " + repoId);
-		String name = (String) session.getAttribute("username");
-		User user = userService.getUserIdService(name);
-		ArrayList<Supplier> suppliers = supplierService.getSuppliersService();
+		try {
+			String repoId = request.getParameter("report");
+			String name = (String) session.getAttribute("username");
+			User user = userService.getUserIdService(name);
+			ArrayList<Supplier> suppliers = supplierService
+					.getSuppliersService();
 
-		if (repoId != "" && repoId != null)
-			reportService.deleteFileService(repoId);
+			if (repoId != "" && repoId != null)
+				reportService.deleteFileService(repoId);
 
-		if (user.getId() != 0) {
-			ArrayList<Report> reports = reportService.getReportService(user
-					.getId());
-			model.addAttribute("reports", reports);
+			if (user.getId() != 0) {
+				ArrayList<Report> reports = reportService.getReportService(user
+						.getId());
+				model.addAttribute("reports", reports);
+			}
+
+			model.addAttribute("suppliers", suppliers);
+			model.addAttribute("username", name);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		model.addAttribute("suppliers", suppliers);
-		model.addAttribute("username", name);
 		return "index";
 	}
 

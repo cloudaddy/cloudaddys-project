@@ -1,5 +1,6 @@
 package edu.neu.cloudaddy.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
@@ -21,7 +22,13 @@ public class SupplierServiceImpl implements SupplierService{
 	@Override
 	public ArrayList<Supplier> getSuppliersService() {
 		
-		return supplierDao.getSuppliers(dataSource);
+		try {
+			return supplierDao.getSuppliers(dataSource);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

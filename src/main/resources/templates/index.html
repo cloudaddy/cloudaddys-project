@@ -56,7 +56,7 @@ function validateForm() {
 				<div class="form-group">
 					<label class="control-label col-sm-10" for="prod">Select Supplier</label>
 					<div class="col-sm-2">
-			   			<select th:name="prod" style="height:30px;width:100px;" class="form-control">
+			   			<select th:name="prod" class="btn btn-default">
 							<option th:each="supplier : ${suppliers}"
 					  			th:value="${supplier.getId()}"
 			 		  			th:text="${supplier.getCompany()}" />

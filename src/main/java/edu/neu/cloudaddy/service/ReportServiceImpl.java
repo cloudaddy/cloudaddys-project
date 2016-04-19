@@ -1,9 +1,7 @@
 package edu.neu.cloudaddy.service;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,56 +19,44 @@ public class ReportServiceImpl implements ReportService {
 	ReportDao reportDao;
 
 	@Override
-	public ArrayList<Report> getReportService(int userID) {
+	public ArrayList<Report> getReportService(int userID) throws SQLException {
 
 		return reportDao.getReports(dataSource, userID);
 	}
 
 	@Override
-	public Report getFileContentService(String repoName) {
+	public Report getFileContentService(String repoName) throws SQLException {
 		Report report = reportDao.getFileContent(dataSource, repoName);
-		//writefile(report.getReportName(), report.getAttached());
+		// writefile(report.getReportName(), report.getAttached());
 		return report;
 	}
 
-	public String writefile(String reportName, String fileContent) {
-		try {
-			Writer output = null;
-			
-			//File index = new File("src/main/resources/tmp");
-			File index = new File(getClass().getResource("/").getPath() + "tmp");
-			if(!index.exists()){
-				index.mkdir();
-			}else{
-				index = new File(getClass().getResource("/tmp//").getPath());
-				String[] entries = index.list();
-				for (String s : entries) {
-					File currentFile = new File(index.getPath(), s);
-					currentFile.delete();
-				}
-
-				File file = new File(getClass().getResource("/tmp//").getPath() + reportName);
-				output = new BufferedWriter(new FileWriter(file));
-
-				if(fileContent!=null){
-					for(String content: fileContent.split("\n")){
-						output.write(content + "\n");
-					}
-				}
-				output.close();
-				System.out.println("File has been written");
-			}
-
-		} catch (Exception e) {
-			System.out.println("Could not create file");
-		}
-		return reportName;
-	}
+	/*
+	 * public String writefile(String reportName, String fileContent) { try {
+	 * Writer output = null;
+	 * 
+	 * //File index = new File("src/main/resources/tmp"); File index = new
+	 * File(getClass().getResource("/").getPath() + "tmp"); if(!index.exists()){
+	 * index.mkdir(); }else{ index = new
+	 * File(getClass().getResource("/tmp//").getPath()); String[] entries =
+	 * index.list(); for (String s : entries) { File currentFile = new
+	 * File(index.getPath(), s); currentFile.delete(); }
+	 * 
+	 * File file = new File(getClass().getResource("/tmp//").getPath() +
+	 * reportName); output = new BufferedWriter(new FileWriter(file));
+	 * 
+	 * if(fileContent!=null){ for(String content: fileContent.split("\n")){
+	 * output.write(content + "\n"); } } output.close();
+	 * System.out.println("File has been written"); }
+	 * 
+	 * } catch (Exception e) { System.out.println("Could not create file"); }
+	 * return reportName; }
+	 */
 
 	@Override
-	public void deleteFileService(String repoId) {
+	public void deleteFileService(String repoId) throws SQLException {
 		reportDao.deleteFile(dataSource, repoId);
-		
+
 	}
 
 }
