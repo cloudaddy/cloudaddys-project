@@ -50,7 +50,7 @@ public class ReportController {
 			if (days == null || days == "")
 				days = "1";
 			if (supplierId == null || supplierId == "")
-				supplierId = "0";
+				supplierId = "1";
 			if (counter == null || counter == "")
 				counter = "1";
 			// System.out.println("days : " + days + "supplierId :" + supplierId
