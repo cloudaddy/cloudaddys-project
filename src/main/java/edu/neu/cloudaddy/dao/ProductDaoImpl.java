@@ -65,7 +65,7 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	public void saveReport(DataSource dataSource, int supplierId, int userId,
-			String company, String reportName, ArrayList<Product> products,
+			String reportName, ArrayList<Product> products,
 			ArrayList<Inventory_Transaction> it) throws SQLException {
 		try {
 			// System.out.println("inside save");
@@ -73,7 +73,7 @@ public class ProductDaoImpl implements ProductDao {
 			connection.setAutoCommit(false);
 			PreparedStatement query = connection
 					.prepareStatement("insert into reports (userId, name, "
-							+ " attachment, deleted, created_on, modified_on, supplier_company)"
+							+ " attachment, deleted, created_on, modified_on, supplier_id)"
 							+ " values (?,?,?,?,?,?,?);");
 			query.setInt(1, userId);
 			query.setString(2, reportName);
@@ -117,7 +117,7 @@ public class ProductDaoImpl implements ProductDao {
 					(new SimpleDateFormat("MM-dd-yy")).format(new Date()));
 			query.setString(6,
 					(new SimpleDateFormat("MM-dd-yy")).format(new Date()));
-			query.setString(7, company);
+			query.setInt(7, supplierId);
 			query.executeUpdate();
 			// System.out.println("query:" + query);
 			connection.commit();

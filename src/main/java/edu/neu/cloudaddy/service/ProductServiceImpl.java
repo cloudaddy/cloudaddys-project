@@ -36,8 +36,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void writeProductsService(int supplierId, int userId,
-			String company, ArrayList<Product> products,
-			ArrayList<Inventory_Transaction> it, int daysOld, int count) throws SQLException {
+			ArrayList<Product> products, ArrayList<Inventory_Transaction> it,
+			int daysOld, int count) throws SQLException {
 		if (products.size() > 0) {
 			String reportName = "Report_"
 					+ daysOld
@@ -46,13 +46,13 @@ public class ProductServiceImpl implements ProductService {
 					+ "_"
 					+ (new SimpleDateFormat("MM-dd-yy:HH:mm:ss"))
 							.format(new Date()) + ".txt";
-			
-				try {
-					productDao.saveReport(dataSource, supplierId, userId, company,
-							reportName, products, it);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+
+			try {
+				productDao.saveReport(dataSource, supplierId, userId,
+						reportName, products, it);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

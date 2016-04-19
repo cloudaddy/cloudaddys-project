@@ -63,8 +63,8 @@ public class ReportController {
 					.getSuppliersService();
 			ArrayList<Product> products = productService
 					.getProductsService(suppId);
-			String supplier_company = supplierService
-					.getSupplierNameService(suppId);
+			//String supplier_company = supplierService
+				//	.getSupplierNameService(suppId);
 
 			for (int i = 1; i <= count; i++) {
 				// generate data reports
@@ -72,7 +72,7 @@ public class ReportController {
 				it = productService.getInventoryTransactionsService(products,
 						daysOld);
 				productService.writeProductsService(suppId, user.getId(),
-						supplier_company, products, it, daysOld, i);
+						products, it, daysOld, i);
 			}
 
 			if (user.getId() != 0) {
