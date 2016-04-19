@@ -578,7 +578,7 @@ CREATE TABLE `cloudaddy`.`reports` (
   `description` varchar(255) default NULL, 	
   `attachment` LONGTEXT DEFAULT NULL,
   `deleted` VARCHAR(1),
-  `supplier_company` VARCHAR(100),
+  `supplier_id` mediumint(255) NOT NULL,
   `created_on` VARCHAR(10),
   `modified_on` VARCHAR(10),
    PRIMARY KEY (Id)
