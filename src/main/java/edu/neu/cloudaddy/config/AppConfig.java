@@ -29,6 +29,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
+import edu.neu.cloudaddy.interceptors.KeepAliveHeaderInteceptor;
 import edu.neu.cloudaddy.interceptors.SourceServerAddressInteceptor;
 
 @EnableWebMvc
@@ -104,6 +105,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new SourceServerAddressInteceptor());
+		registry.addInterceptor(new KeepAliveHeaderInteceptor());
 	}
 
 	@Bean
