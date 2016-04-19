@@ -540,9 +540,9 @@ CREATE TABLE IF NOT EXISTS `cloudaddy`.`strings` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-----------------------------------------------------------
--- Table users
---------------------------------------------------------
+-- --------------------------------------------------------
+-- Table `cloudaddy`.`users`
+-- ------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cloudaddy`.`users` (
   `id` mediumint(8) unsigned NOT NULL auto_increment,
   `username` varchar(255) default NULL,
@@ -558,9 +558,9 @@ CREATE TABLE IF NOT EXISTS `cloudaddy`.`users` (
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
----------------------------------------------------
--- table users_passwords
---------------------------------------------------
+-- -------------------------------------------------
+-- table `cloudaddy`.`users_passwords`
+-- ------------------------------------------------
 CREATE TABLE `cloudaddy`.`users_password` (
   `id` mediumint(8) unsigned default NULL,
   `password` varchar(255),
@@ -568,9 +568,9 @@ CREATE TABLE `cloudaddy`.`users_password` (
   FOREIGN KEY (`id`) REFERENCES `users`(`id`)
 );
 
--------------------------------------------------
--- table Reports
--------------------------------------------------
+-- -----------------------------------------------
+-- table `cloudaddy`.`reports`
+-- -----------------------------------------------
 CREATE TABLE `cloudaddy`.`reports` (
   `Id` mediumint unsigned NOT NULL auto_increment,
   `userId` mediumint,
@@ -584,11 +584,11 @@ CREATE TABLE `cloudaddy`.`reports` (
    PRIMARY KEY (Id)
 );
 
---------------------------------------------------
--- table authorities
--------------------------------------------------
+-- ------------------------------------------------
+-- table `cloudaddy`.`authorities`
+-- -----------------------------------------------
 create table `authorities` ( `username` varchar(50) not null,`authority` varchar(50) not null);
---------------------------------------------------
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
