@@ -16,7 +16,7 @@ public class SupplierDaoImp implements SupplierDao{
 	ResultSet rs;
 	Connection connection;
 
-	public ArrayList<Supplier> getSuppliers(DataSource dataSource){
+	public ArrayList<Supplier> getSuppliers(DataSource dataSource) throws SQLException{
 		ArrayList<Supplier> supplierList = new ArrayList<>();
 		try {
 			// Class.forName(driver).newInstance();
@@ -36,12 +36,14 @@ public class SupplierDaoImp implements SupplierDao{
 			for(Supplier s: supplierList){
 				System.out.println("supplier : " + s.getCompany() + " : " +  s.getId());
 			}
-			connection.close();
+			
 		} catch (SQLException ex) {
 			// handle any errors
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
+		}finally{
+			connection.close();
 		}
 
 		return supplierList;

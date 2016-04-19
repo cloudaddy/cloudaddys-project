@@ -9,33 +9,35 @@ import org.springframework.stereotype.Repository;
 import edu.neu.cloudaddy.model.User;
 
 @Repository("userDao")
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 	Connection connection;
 	ResultSet rs;
-	
+
 	@Override
-	public User getUserId(DataSource dataSource, String username) {
+	public User getUserId(DataSource dataSource, String username)
+			throws SQLException {
 		User user = new User();
 		try {
 			connection = dataSource.getConnection();
 			PreparedStatement query = connection
-					.prepareStatement("select u.id from users u, users_password p" +
-							" where u.id = p.id and u.username =?;");
-			query.setString(1,username);
-			
+					.prepareStatement("select u.id from users u, users_password p"
+							+ " where u.id = p.id and u.username =?;");
+			query.setString(1, username);
+
 			rs = query.executeQuery();
 			rs.next();
 			String Id = rs.getString("id");
-		
+
 			user.setId(Integer.parseInt(Id));
 			user.setUsername(username);
-			
-			connection.close();
+
 		} catch (SQLException ex) {
 			// handle any errors
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
+		} finally {
+			connection.close();
 		}
 		return user;
 	}
