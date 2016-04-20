@@ -27,7 +27,7 @@ public class ReportDaoImpl implements ReportDao {
 							"r.created_on, r.modified_on, s.company from " +
 							"reports r left join suppliers s on " +
 							"r.supplier_id = s.id where userId =? "
-							+ "and deleted = 'N' order by created_on desc LIMIT 50;");
+							+ "and deleted = 'N' order by r.name, r.created_on desc LIMIT 50;");
 			query.setInt(1, userId);
 			// System.out.println("query : " + query);
 			rs = query.executeQuery();
