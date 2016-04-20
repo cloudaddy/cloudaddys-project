@@ -9,6 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.web.servlet.MockMvc;
 
+import junit.framework.Assert;
+import org.junit.Test;
+
 import edu.neu.cloudaddy.controllers.HomeController;
 
 public class MvcTest {
@@ -23,13 +26,21 @@ public class MvcTest {
 	}
 
 	@Test
-	public void testController() throws Exception {
+	public void TestLoginController() throws Exception {
 			mockMvc
 				.perform(get("/"))
 				.andExpect(status().isOk())
-				.andExpect(
-						content().contentType("text/plain;charset=ISO-8859-1"))
-				.andExpect(content().string("home"));
+				//.andExpect(
+						//content().contentType("text/plain;charset=ISO-8859-1"))
+				.andReturn();
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	public void TestHomeController() {
+		
+		Assert.assertEquals(HomeController.index(), "home");
+
 	}
 	
 }
