@@ -21,7 +21,8 @@ public class ProductDaoImpl implements ProductDao {
 	ResultSet rs;
 	Connection connection;
 
-	public ArrayList<Product> getProducts(DataSource dataSource, int supplierId) throws SQLException {
+	public ArrayList<Product> getProducts(DataSource dataSource, int supplierId)
+			throws SQLException {
 		ArrayList<Product> productList = new ArrayList<>();
 		try {
 			connection = dataSource.getConnection();
@@ -51,13 +52,13 @@ public class ProductDaoImpl implements ProductDao {
 
 				productList.add(product);
 			}
-			
+
 		} catch (SQLException ex) {
 			// handle any errors
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-		}finally{
+		} finally {
 			connection.close();
 		}
 
@@ -123,24 +124,24 @@ public class ProductDaoImpl implements ProductDao {
 			query.executeUpdate();
 			// System.out.println("query:" + query);
 			connection.commit();
-			
+
 		} catch (SQLException ex) {
 			// handle any errors
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-		}
-		finally{
+		} finally {
 			connection.close();
 		}
 	}
 
 	public ArrayList<Inventory_Transaction> getInventoryTransactions(
-			DataSource dataSource, ArrayList<Product> products, int daysOld) throws SQLException {
+			DataSource dataSource, ArrayList<Product> products, int daysOld)
+			throws SQLException {
 		ArrayList<Inventory_Transaction> it_List = new ArrayList<>();
 
 		Date newDate = getDate(daysOld);
-		
+
 		try {
 			connection = dataSource.getConnection();
 			PreparedStatement query = connection
@@ -190,8 +191,7 @@ public class ProductDaoImpl implements ProductDao {
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
-		}
-		finally{
+		} finally {
 			connection.close();
 		}
 		return it_List;
