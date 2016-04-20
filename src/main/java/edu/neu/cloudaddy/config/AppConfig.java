@@ -128,16 +128,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return redisCacheManager;
 	}
 
-//	@Bean
-//	@Order(value = 0)
-//	public FilterRegistrationBean sessionRepositoryFilterRegistration(
-//			SessionRepositoryFilter springSessionRepositoryFilter) {
-//		FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-//		filterRegistrationBean.setFilter(new DelegatingFilterProxy(springSessionRepositoryFilter));
-//		filterRegistrationBean.setUrlPatterns(Arrays.asList("/*"));
-//		return filterRegistrationBean;
-//	}
-
 	@Bean
 	public static ConfigureRedisAction configureRedisAction() {
 		return ConfigureRedisAction.NO_OP;
