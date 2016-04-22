@@ -8,7 +8,7 @@ Final project repo for the Network Structure &amp; Cloud Computing class
 What it is made of
 ------------------
 
--	Java 8
+-	Java 7
 -	Spring Boot
 -	Spring MVC
 -	Spring Security
